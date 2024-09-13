@@ -1,0 +1,23 @@
+{
+  "name": "bjootify-discord-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lukasvdgaag/Bjootify-Discord-Bot.git",
+  "author": "lukasvdgaag <lukasvdgaag@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^1.9.0",
+    "discord.js": "^14.16.2",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "discord-api-types": "^0.37.100"
+  }
+}

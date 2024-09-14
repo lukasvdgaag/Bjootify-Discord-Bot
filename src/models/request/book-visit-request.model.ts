@@ -3,6 +3,7 @@ import {Gender} from "../../enums/gender";
 import {SalonTreatment} from "../response/salon-treatment";
 import {SalonEmployee} from "../response/salon-employee";
 import {VisitSlot} from "../response/visit-slot";
+import {PaymentType} from "../../enums/payment-type";
 
 export interface TreatmentAssignment {
     treatment: SalonTreatment;
@@ -28,6 +29,6 @@ export interface BookVisitRequest {
     treatmentAssignments: TreatmentAssignment[];
     visitSlot: VisitSlot;
     bookedWithWidget: boolean; // false
-    paymentType: number; // 1 ?
+    paymentType: PaymentType; // 1 ?
     adviceRequested: boolean // false
 }

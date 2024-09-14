@@ -8,3 +8,8 @@ export interface SalonTreatment {
     durationInMinutes: number;
     mandatoryDownPayment: number;
 }
+
+export interface SalonTreatmentCategory {
+    name: string;
+    treatments: SalonTreatment[];
+}

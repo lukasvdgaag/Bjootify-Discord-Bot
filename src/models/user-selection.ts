@@ -1,5 +1,7 @@
 export class UserSelection {
     userId: string;
+    selectedCity?: string;
+    selectedSalonName?: string;
     selectedSalonId?: string;
     selectedTreatmentId?: string;
 
@@ -7,17 +9,30 @@ export class UserSelection {
         this.userId = userId;
     }
 
-    selectSalon(salonId: string): void {
+    selectCity(city: string): UserSelection {
+        this.selectedCity = city;
+        return this;
+    }
+
+    selectSalonName(salonName: string): UserSelection {
+        this.selectedSalonName = salonName;
+        return this;
+    }
+
+    selectSalon(salonId: string): UserSelection {
         this.selectedSalonId = salonId;
+        return this;
     }
 
-    selectTreatment(treatmentId: string): void {
+    selectTreatment(treatmentId: string): UserSelection {
         this.selectedTreatmentId = treatmentId;
+        return this;
     }
 
-    clearSelections(): void {
+    clearSelections(): UserSelection {
         this.selectedSalonId = undefined;
         this.selectedTreatmentId = undefined;
+        return this;
     }
 
 }

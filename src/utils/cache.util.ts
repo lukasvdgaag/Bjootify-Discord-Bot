@@ -21,6 +21,10 @@ export class Cache<T> {
         this.cache.delete(key);
     }
 
+    values(): T[] {
+        return Array.from(this.cache.values());
+    }
+
     clear(): void {
         this.cache.clear();
     }

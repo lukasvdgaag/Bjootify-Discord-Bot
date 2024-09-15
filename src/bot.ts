@@ -1,17 +1,21 @@
-import {ChatInputCommandInteraction, Client, GatewayIntentBits} from 'discord.js';
+import {ChatInputCommandInteraction, Client, GatewayIntentBits, MessageComponentInteraction} from 'discord.js';
 import * as dotenv from 'dotenv';
 import {Cache} from "./utils/cache.util";
 import {UserSelection} from "./models/user-selection";
 import {SalonDetails} from "./models/response/salon-details";
-import {Command} from "./commands/command";
-import SearchCommand from "./commands/hairsalon/search.command";
+import {Command} from "./interactions/commands/command";
+import {SearchCommand} from "./interactions/commands/hairsalon/search.command";
 import {applicationCommands} from "./constants/commands.constant";
+import {Interaction} from "./interactions/interaction";
+import {SelectSalonInteraction} from "./interactions/buttons/select-salon.interaction";
+import {SELECT_SALON_INTERACTION_ID} from "./constants/interactions.constant";
 
 dotenv.config();
 
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 
-const commands = new Cache<Command[]>();
+const regularInteractions = new Cache<Interaction<any>>();
+const commandInteractions = new Cache<Command[]>();
 
 const salonsCache = new Cache<SalonDetails>();
 const userSelectionsCache = new Cache<UserSelection>();
@@ -19,41 +23,37 @@ const userSelectionsCache = new Cache<UserSelection>();
 client.on('ready', () => {
     client.application?.commands.set(applicationCommands).catch(console.error);
 
-    const hairSalonCommands = [
+    commandInteractions.set('hairsalon', [
         new SearchCommand(),
-    ];
-    commands.set('hairsalon', hairSalonCommands);
+    ]);
+    regularInteractions.set(SELECT_SALON_INTERACTION_ID, new SelectSalonInteraction(salonsCache, userSelectionsCache))
 
     console.log('Bjootify Bot is online!');
 });
 
 client.on('interactionCreate', (interaction) => {
-    console.log('received interaction')
-    if (!(interaction instanceof ChatInputCommandInteraction)) {
-        return;
-    }
-    console.log('received chat input command interaction')
+    if (interaction instanceof ChatInputCommandInteraction) {
+        const commandList = commandInteractions.get(interaction.commandName);
+        if (!commandList) {
+            return;
+        }
 
-    const commandList = commands.get(interaction.commandName);
-    if (!commandList) {
-        console.log(`Command ${interaction.commandName} not found`);
-        return;
-    }
-    console.log(`Command ${interaction.commandName} found`);
+        const commandGroup = interaction.options.getSubcommandGroup();
+        const subCommand = interaction.options.getSubcommand();
 
-    const commandGroup = interaction.options.getSubcommandGroup();
-    const subCommand = interaction.options.getSubcommand();
-    console.log(`Command group: ${commandGroup}, subcommand: ${subCommand}`);
+        const command: Command | undefined = commandList.find(
+            (c: Command) => c.group === commandGroup && c.name === subCommand
+        );
 
-    const command: Command | undefined = commandList.find(
-        (c: Command) => c.group === commandGroup && c.name === subCommand
-    );
+        if (command) {
+            command.execute(interaction);
+        }
+    } else if (interaction instanceof MessageComponentInteraction) {
+        const regularInteraction = regularInteractions.get(interaction.customId);
 
-    if (command) {
-        console.log('Executing command');
-        command.execute(interaction);
-    } else {
-        console.log(`Command ${subCommand} not found`);
+        if (regularInteraction) {
+            regularInteraction.execute(interaction);
+        }
     }
 })
 

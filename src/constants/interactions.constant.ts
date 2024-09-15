@@ -1,0 +1,1 @@
+export const SELECT_SALON_INTERACTION_ID = "select-salon";

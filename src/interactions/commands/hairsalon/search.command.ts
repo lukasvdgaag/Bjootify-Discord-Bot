@@ -4,7 +4,7 @@ import {fetchSalonsInCity} from "../../../utils/api.util";
 import {getAddressLine, getReviewLine} from "../../../utils/format.util";
 import {SalonSearchResult} from "../../../models/response/salon-search-result";
 import {SELECT_SALON_INTERACTION_ID} from "../../../constants/interactions.constant";
-import {createEmbed} from "../../../utils/messaging.util";
+import {createEmbed, createErrorEmbed} from "../../../utils/messaging.util";
 
 export class SearchCommand extends Command {
 
@@ -18,7 +18,9 @@ export class SearchCommand extends Command {
             const {data} = await fetchSalonsInCity(city);
 
             if (data.length === 0) {
-                await interaction.reply(`No salons found in ${city}`);
+                await interaction.reply({
+                    embeds: [createErrorEmbed('No salons found', `No salons found in ${city}`)]
+                });
                 return;
             }
 
@@ -79,7 +81,9 @@ export class SearchCommand extends Command {
             })
         } catch (e) {
             console.error(e);
-            await interaction.reply('An error occurred while fetching salons');
+            await interaction.reply({
+                embeds: [createErrorEmbed('Something went wrong', 'An error occurred while fetching salons')]
+            })
         }
     }
 

@@ -8,8 +8,11 @@ import {SearchCommand} from "./interactions/commands/hairsalon/search.command";
 import {applicationCommands} from "./constants/commands.constant";
 import {Interaction} from "./interactions/interaction";
 import {SelectSalonInteraction} from "./interactions/buttons/select-salon.interaction";
-import {SELECT_SALON_INTERACTION_ID} from "./constants/interactions.constant";
+import {SELECT_SALON_INTERACTION_ID, SELECT_SALON_TREATMENT_GROUPS} from "./constants/interactions.constant";
 import {DetailsCommand} from "./interactions/commands/hairsalon/details.command";
+import {SalonTreatmentCategory} from "./models/response/salon-treatment";
+import {ListTreatmentCommand} from "./interactions/commands/hairsalon/treatment/list.treatment.command";
+import {ViewSalonTreatmentGroupsInteraction} from "./interactions/buttons/view-salon-treatment-groups.interaction";
 
 dotenv.config();
 
@@ -20,6 +23,7 @@ const commandInteractions = new Cache<Command[]>();
 
 const salonsCache = new Cache<SalonDetails>();
 const userSelectionsCache = new Cache<UserSelection>();
+const treatmentsCache = new Cache<SalonTreatmentCategory[]>();
 
 client.on('ready', () => {
     client.application?.commands.set(applicationCommands).catch(console.error);
@@ -27,8 +31,10 @@ client.on('ready', () => {
     commandInteractions.set('hairsalon', [
         new SearchCommand(),
         new DetailsCommand(salonsCache, userSelectionsCache),
+        new ListTreatmentCommand(salonsCache, userSelectionsCache, treatmentsCache)
     ]);
-    regularInteractions.set(SELECT_SALON_INTERACTION_ID, new SelectSalonInteraction(salonsCache, userSelectionsCache))
+    regularInteractions.set(SELECT_SALON_INTERACTION_ID, new SelectSalonInteraction(salonsCache, userSelectionsCache));
+    regularInteractions.set(SELECT_SALON_TREATMENT_GROUPS, new ViewSalonTreatmentGroupsInteraction(salonsCache, treatmentsCache));
 
     console.log('Bjootify Bot is online!');
 });
@@ -51,7 +57,8 @@ client.on('interactionCreate', (interaction) => {
             command.execute(interaction);
         }
     } else if (interaction instanceof MessageComponentInteraction) {
-        const regularInteraction = regularInteractions.get(interaction.customId);
+        const [interactionId] = interaction.customId.split(':');
+        const regularInteraction = regularInteractions.get(interactionId);
 
         if (regularInteraction) {
             regularInteraction.execute(interaction);

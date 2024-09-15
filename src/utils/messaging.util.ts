@@ -1,7 +1,18 @@
-import {APIEmbedField, ColorResolvable, EmbedBuilder, EmbedFooterOptions} from "discord.js";
+import {
+    ActionRowBuilder,
+    APIEmbedField,
+    ButtonBuilder,
+    ButtonStyle,
+    ColorResolvable,
+    CommandInteraction,
+    EmbedBuilder,
+    EmbedFooterOptions,
+    MessageComponentInteraction
+} from "discord.js";
 import {ERROR_COLOR, THEME_COLOR} from "../constants/colors.constant";
 import {SalonDetails} from "../models/response/salon-details";
 import {getAddressLine, getReviewLine, getScheduleLine} from "./format.util";
+import {SELECT_SALON_TREATMENT_GROUPS} from "../constants/interactions.constant";
 
 export const createEmbed = ({title, description = null, color = THEME_COLOR, fields = [], imageUrl = null, thumbnailUrl = null, footer = null}: {
     title: string,
@@ -38,38 +49,50 @@ export const createSuccessEmbed = (title: string, description: string) => {
     });
 }
 
-export const createSalonDetailsEmbed = (salon: SalonDetails, titleOverride?: string, descriptionOverride?: string) => {
-    return createEmbed({
-        title: titleOverride ?? `${salon.name}${salon.allowsGifts ? ' 🎁' : ''}`,
-        description: descriptionOverride ?? salon.description ? `*"${salon.description}"*` : null,
-        thumbnailUrl: salon.logoUrl,
-        imageUrl: salon.photoUrl,
-        fields: [
-            {
-                name: 'Reviews',
-                value: getReviewLine(salon),
-                inline: true,
-            },
-            {
-                name: 'Address',
-                value: getAddressLine(salon),
-                inline: true,
-            },
-            {
-                name: 'Online Payments',
-                value: salon.allowsOnlinePayments ? '✅ This salon allows you to pay online!' : '❌ This salon does not allow online payments.',
-                inline: true,
-            },
-            {
-                name: 'Schedule',
-                value: getScheduleLine(salon.schedule),
-                inline: false,
-            },
-            {
-                name: 'Contact',
-                value: `Phone: ${salon.phoneNumber}\nEmail: ${salon.email}\nWebsite: ${salon.website}`,
-                inline: false,
-            },
+export const sendSalonDetailsEmbed = async (interaction: CommandInteraction | MessageComponentInteraction, salon: SalonDetails, titleOverride?: string, descriptionOverride?: string) => {
+    await interaction.reply({
+        embeds: [
+            createEmbed({
+                title: titleOverride ?? `${salon.name}${salon.allowsGifts ? ' 🎁' : ''}`,
+                description: descriptionOverride ?? salon.description ? `*"${salon.description}"*` : null,
+                thumbnailUrl: salon.logoUrl,
+                imageUrl: salon.photoUrl,
+                fields: [
+                    {
+                        name: 'Reviews',
+                        value: getReviewLine(salon),
+                        inline: true,
+                    },
+                    {
+                        name: 'Address',
+                        value: getAddressLine(salon),
+                        inline: true,
+                    },
+                    {
+                        name: 'Online Payments',
+                        value: salon.allowsOnlinePayments ? '✅ This salon allows you to pay online!' : '❌ This salon does not allow online payments.',
+                        inline: true,
+                    },
+                    {
+                        name: 'Schedule',
+                        value: getScheduleLine(salon.schedule),
+                        inline: false,
+                    },
+                    {
+                        name: 'Contact',
+                        value: `Phone: ${salon.phoneNumber}\nEmail: ${salon.email}\nWebsite: ${salon.website}`,
+                        inline: false,
+                    },
+                ]
+            })
+        ],
+        components: [
+            new ActionRowBuilder<ButtonBuilder>().addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`${SELECT_SALON_TREATMENT_GROUPS}:${salon.id}`)
+                    .setLabel('View Treatments')
+                    .setStyle(ButtonStyle.Primary)
+            )
         ]
-    })
+    });
 }

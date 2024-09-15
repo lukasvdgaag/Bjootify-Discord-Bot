@@ -3,7 +3,7 @@ import {ChatInputCommandInteraction} from "discord.js";
 import {Cache, getUserSelectedSalon} from "../../../utils/cache.util";
 import {SalonDetails} from "../../../models/response/salon-details";
 import {UserSelection} from "../../../models/user-selection";
-import {createSalonDetailsEmbed} from "../../../utils/messaging.util";
+import {sendSalonDetailsEmbed} from "../../../utils/messaging.util";
 
 export class DetailsCommand extends Command {
 
@@ -23,10 +23,7 @@ export class DetailsCommand extends Command {
             return;
         }
 
-        await interaction.reply({
-            embeds: [createSalonDetailsEmbed(salon)]
-        });
+        await sendSalonDetailsEmbed(interaction, salon);
     }
-
 
 }

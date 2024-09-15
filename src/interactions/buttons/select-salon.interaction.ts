@@ -4,7 +4,7 @@ import {Cache} from "../../utils/cache.util";
 import {UserSelection} from "../../models/user-selection";
 import {SalonDetails} from "../../models/response/salon-details";
 import {fetchSalonDetailsByCityAndSlug} from "../../utils/api.util";
-import {createErrorEmbed, createSalonDetailsEmbed} from "../../utils/messaging.util";
+import {createErrorEmbed, sendSalonDetailsEmbed} from "../../utils/messaging.util";
 
 export class SelectSalonInteraction extends Interaction<StringSelectMenuInteraction> {
 
@@ -50,9 +50,7 @@ export class SelectSalonInteraction extends Interaction<StringSelectMenuInteract
 
         this.userSelectionCache.set(interaction.user.id, userSelection);
 
-        await interaction.reply({
-            embeds: [createSalonDetailsEmbed(salon, `Selected ${salon.name} in ${city}`)]
-        })
+        await sendSalonDetailsEmbed(interaction, salon, `Selected ${salon.name} in ${city}`);
     }
 
 }

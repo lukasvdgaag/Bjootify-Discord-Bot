@@ -38,7 +38,7 @@ export class SearchCommand extends Command {
             salons = salons.slice(0, 5);
 
             const embed = createEmbed({
-                title: `Salons in ${city}`,
+                title: `Salons in ${city} (${data.length} results)`,
                 description: `Here are the top ${salons.length} salons in ${city}${query ? ` for search query "${query}"` : ''}.`,
                 fields: salons.map((salon, index) => {
                     let highlightedName = salon.salonName;

@@ -9,6 +9,7 @@ import {applicationCommands} from "./constants/commands.constant";
 import {Interaction} from "./interactions/interaction";
 import {SelectSalonInteraction} from "./interactions/buttons/select-salon.interaction";
 import {SELECT_SALON_INTERACTION_ID} from "./constants/interactions.constant";
+import {DetailsCommand} from "./interactions/commands/hairsalon/details.command";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ client.on('ready', () => {
 
     commandInteractions.set('hairsalon', [
         new SearchCommand(),
+        new DetailsCommand(salonsCache, userSelectionsCache),
     ]);
     regularInteractions.set(SELECT_SALON_INTERACTION_ID, new SelectSalonInteraction(salonsCache, userSelectionsCache))
 

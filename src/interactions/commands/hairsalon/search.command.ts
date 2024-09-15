@@ -2,7 +2,7 @@ import {Command} from "../command";
 import {ActionRowBuilder, APIEmbedField, ChatInputCommandInteraction, EmbedBuilder, StringSelectMenuBuilder} from "discord.js";
 import {fetchSalonsInCity} from "../../../utils/api.util";
 import {THEME_COLOR} from "../../../constants/colors.constant";
-import {getLocationLine, getReviewLine} from "../../../utils/format.util";
+import {getAddressLine, getReviewLine} from "../../../utils/format.util";
 import {SalonSearchResult} from "../../../models/response/salon-search-result";
 import {SELECT_SALON_INTERACTION_ID} from "../../../constants/interactions.constant";
 
@@ -39,7 +39,7 @@ export class SearchCommand extends Command {
                     salons.map((salon, index) => (
                         {
                             name: `#${index + 1} - ${salon.salonName}${salon.allowsGifts ? ' 🎁' : ''}`,
-                            value: `${getReviewLine(salon)}\n\n${getLocationLine(salon)}\n*\`${salon.salonNameAlias}\`*`,
+                            value: `${getReviewLine(salon)}\n\n${getAddressLine(salon)}\n*\`${salon.salonNameAlias}\`*`,
                         } as APIEmbedField
                     ))
                 );

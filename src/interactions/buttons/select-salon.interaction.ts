@@ -4,6 +4,7 @@ import {Cache} from "../../utils/cache.util";
 import {UserSelection} from "../../models/user-selection";
 import {SalonDetails} from "../../models/response/salon-details";
 import {fetchSalonDetailsByCityAndSlug} from "../../utils/api.util";
+import {createErrorEmbed, createSalonDetailsEmbed} from "../../utils/messaging.util";
 
 export class SelectSalonInteraction extends Interaction<StringSelectMenuInteraction> {
 
@@ -26,14 +27,18 @@ export class SelectSalonInteraction extends Interaction<StringSelectMenuInteract
                 const {data} = await fetchSalonDetailsByCityAndSlug(city, salonNameAlias);
 
                 if (!data) {
-                    await interaction.reply('No salon found with the provided details.');
+                    await interaction.reply({
+                        embeds: [createErrorEmbed('Salon not found', 'No salon found with the provided details.')]
+                    })
                     return;
                 }
                 this.salonsCache.set(data.id, data);
                 salon = data;
             } catch (e) {
                 console.error(e);
-                await interaction.reply('An error occurred while fetching the salon details. Please try again later.');
+                await interaction.reply({
+                    embeds: [createErrorEmbed('Something went wrong', 'An error occurred while fetching the salon details.')]
+                })
                 return;
             }
         }
@@ -45,7 +50,9 @@ export class SelectSalonInteraction extends Interaction<StringSelectMenuInteract
 
         this.userSelectionCache.set(interaction.user.id, userSelection);
 
-        await interaction.reply(`You have selected ${salon.name} in ${city}`);
+        await interaction.reply({
+            embeds: [createSalonDetailsEmbed(salon, `Selected ${salon.name} in ${city}`)]
+        })
     }
 
 }

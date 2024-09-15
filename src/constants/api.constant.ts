@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://bjootify.com/api';
 
-export const SALON_SEARCH_CITY_PATH = (city: string) => `${BASE_URL}/search/${city}/department/94`;
+export const SALON_SEARCH_CITY_PATH = (city: string) => `${BASE_URL}/search/city/${city}/department/94`;
 export const SALON_DETAILS_PATH = (city: string, salonSlug: string) => `${BASE_URL}/salons/city/${city}/salon/${salonSlug}/details`;
 export const SALON_ID_DETAILS_PATH = (salonId: string) => `${BASE_URL}/salons/${salonId}/details`;
 export const SALON_TREATMENTS_PATH = (salonId: string) => `${BASE_URL}/salontreatments/${salonId}/treatments`;

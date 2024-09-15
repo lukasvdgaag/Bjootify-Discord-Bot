@@ -50,8 +50,8 @@ export const fetchApi = async <T>(
 
 export const fetchSalonsInCity = async (
     city: string
-): Promise<ApiResponse<SalonSearchResult>> => {
-    return fetchApi<SalonSearchResult>(SALON_SEARCH_CITY_PATH(city), 'GET');
+): Promise<ApiResponse<SalonSearchResult[]>> => {
+    return fetchApi<SalonSearchResult[]>(SALON_SEARCH_CITY_PATH(city), 'GET');
 }
 
 export const fetchSalonDetailsByCityAndSlug = async (

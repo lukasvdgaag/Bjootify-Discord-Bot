@@ -7,7 +7,7 @@ import {
     SlashCommandSubcommandGroupBuilder
 } from "discord.js";
 
-export const commands: ApplicationCommandDataResolvable[] = [
+export const applicationCommands: ApplicationCommandDataResolvable[] = [
     new SlashCommandBuilder()
         .setName('hairsalon')
         .setNameLocalization('nl', 'kapper')

@@ -1,15 +1,16 @@
-import {APIEmbedField, ColorResolvable, EmbedBuilder} from "discord.js";
+import {APIEmbedField, ColorResolvable, EmbedBuilder, EmbedFooterOptions} from "discord.js";
 import {ERROR_COLOR, THEME_COLOR} from "../constants/colors.constant";
 import {SalonDetails} from "../models/response/salon-details";
 import {getAddressLine, getReviewLine, getScheduleLine} from "./format.util";
 
-export const createEmbed = ({title, description = null, color = THEME_COLOR, fields = [], imageUrl = null, thumbnailUrl = null}: {
+export const createEmbed = ({title, description = null, color = THEME_COLOR, fields = [], imageUrl = null, thumbnailUrl = null, footer = null}: {
     title: string,
     description?: string | null,
     color?: ColorResolvable,
     fields?: APIEmbedField[],
     imageUrl?: string | null,
-    thumbnailUrl?: string | null
+    thumbnailUrl?: string | null,
+    footer?: EmbedFooterOptions | null,
 }) => {
     return new EmbedBuilder()
         .setTitle(title)
@@ -17,6 +18,7 @@ export const createEmbed = ({title, description = null, color = THEME_COLOR, fie
         .setColor(color)
         .setImage(imageUrl)
         .setThumbnail(thumbnailUrl)
+        .setFooter(footer)
         .addFields(fields);
 }
 

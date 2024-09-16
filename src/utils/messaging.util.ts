@@ -12,7 +12,7 @@ import {
 import {ERROR_COLOR, THEME_COLOR} from "@constants/colors.constant";
 import {SalonDetails} from "@models/response/salon-details";
 import {getAddressLine, getReviewLine, getScheduleLine} from "@utils/format.util";
-import {SELECT_SALON_TREATMENT_GROUPS} from "@constants/interactions.constant";
+import {VIEW_SALON_TREATMENT_GROUPS} from "@constants/interactions.constant";
 
 export const createEmbed = ({title, description = null, color = THEME_COLOR, fields = [], imageUrl = null, thumbnailUrl = null, footer = null}: {
     title: string,
@@ -89,7 +89,7 @@ export const sendSalonDetailsEmbed = async (interaction: CommandInteraction | Me
         components: [
             new ActionRowBuilder<ButtonBuilder>().addComponents(
                 new ButtonBuilder()
-                    .setCustomId(`${SELECT_SALON_TREATMENT_GROUPS}:${salon.id}`)
+                    .setCustomId(`${VIEW_SALON_TREATMENT_GROUPS}:${salon.id}`)
                     .setLabel('View Treatments')
                     .setStyle(ButtonStyle.Primary)
             )

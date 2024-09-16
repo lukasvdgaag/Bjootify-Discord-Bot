@@ -14,7 +14,7 @@ import {UserSelection} from "@models/user-selection";
 import {SalonTreatment, SalonTreatmentCategory} from "@models/response/salon-treatment";
 import {createEmbed, createErrorEmbed} from "@utils/messaging.util";
 import {formatTreatmentsLine} from "@utils/format.util";
-import {SELECT_SALON_TREATMENT} from "@constants/interactions.constant";
+import {SELECT_SALON_TREATMENT, VIEW_SALON_TREATMENT_CATEGORY} from "@constants/interactions.constant";
 
 export class ListTreatmentCommand extends Command {
 
@@ -51,7 +51,7 @@ export class ListTreatmentCommand extends Command {
 }
 
 export const sendCategoryTreatmentsMessage = async (
-    interaction: CommandInteraction,
+    interaction: CommandInteraction | MessageComponentInteraction,
     salon: SalonDetails,
     category: string | null,
     query: string | null,
@@ -149,7 +149,7 @@ export const sendTreatmentCategoriesMessage = async (
         components: [
             new ActionRowBuilder<ButtonBuilder>().addComponents(
                 categories.map(category => (new ButtonBuilder()
-                        .setCustomId(`select_treatment_category:${category.name}`)
+                        .setCustomId(`${VIEW_SALON_TREATMENT_CATEGORY}:${salon.id}:${category.name}`)
                         .setStyle(ButtonStyle.Primary)
                         .setLabel(`View ${category.name}`)
                 ))

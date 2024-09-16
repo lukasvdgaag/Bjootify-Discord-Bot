@@ -9,3 +9,5 @@ export const SALON_TREATMENT_EMPLOYEES_PATH = (salonId: string, treatmentId: str
 export const SALON_TREATMENT_SLOTS_PATH = (salonId: string) => `${BASE_URL}/visitSlots/${salonId}/slots`;
 export const SALON_BOOK_VISIT_PATH = `${BASE_URL}/bookvisit`;
 export const COUNTRIES_PATH = `${BASE_URL}/countries/all`;
+
+export const GENERIC_EMPLOYEE_ID = '00000000-0000-0000-0000-000000000000';

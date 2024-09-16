@@ -8,12 +8,18 @@ import {SearchCommand} from "@interactions/commands/hairsalon/search.command";
 import {applicationCommands} from "@constants/commands.constant";
 import {Interaction} from "@interactions/interaction";
 import {SelectSalonInteraction} from "@interactions/buttons/select-salon.interaction";
-import {SELECT_SALON_INTERACTION_ID, VIEW_SALON_TREATMENT_CATEGORY, VIEW_SALON_TREATMENT_GROUPS} from "@constants/interactions.constant";
+import {
+    SELECT_SALON_INTERACTION_ID,
+    SELECT_SALON_TREATMENT,
+    VIEW_SALON_TREATMENT_CATEGORY,
+    VIEW_SALON_TREATMENT_GROUPS
+} from "@constants/interactions.constant";
 import {DetailsCommand} from "@interactions/commands/hairsalon/details.command";
 import {SalonTreatmentCategory} from "@models/response/salon-treatment";
 import {ListTreatmentCommand} from "@interactions/commands/hairsalon/treatment/list.treatment.command";
 import {ViewSalonTreatmentGroupsInteraction} from "@interactions/buttons/view-salon-treatment-groups.interaction";
 import {ViewSalonTreatmentsInteraction} from "@interactions/buttons/view-salon-treatments.interaction";
+import {SelectSalonTreatmentInteraction} from "@interactions/buttons/select-salon-treatment.interaction";
 
 dotenv.config();
 
@@ -37,6 +43,7 @@ client.on('ready', () => {
     regularInteractions.set(SELECT_SALON_INTERACTION_ID, new SelectSalonInteraction(salonsCache, userSelectionsCache));
     regularInteractions.set(VIEW_SALON_TREATMENT_GROUPS, new ViewSalonTreatmentGroupsInteraction(salonsCache, treatmentsCache));
     regularInteractions.set(VIEW_SALON_TREATMENT_CATEGORY, new ViewSalonTreatmentsInteraction(salonsCache, treatmentsCache));
+    regularInteractions.set(SELECT_SALON_TREATMENT, new SelectSalonTreatmentInteraction(userSelectionsCache, salonsCache, treatmentsCache));
 
     console.log('Bjootify Bot is online!');
 });

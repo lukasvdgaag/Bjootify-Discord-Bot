@@ -108,7 +108,7 @@ export const sendCategoryTreatmentsMessage = async (
                 new StringSelectMenuBuilder()
                     .setPlaceholder('Select a treatment')
                     .setMinValues(1)
-                    .setCustomId(`${SELECT_SALON_TREATMENT}:${salon.id}}`)
+                    .setCustomId(`${SELECT_SALON_TREATMENT}:${salon.id}`)
                     .setOptions(treatments.map(treatment => ({
                         label: treatment.name,
                         value: treatment.id

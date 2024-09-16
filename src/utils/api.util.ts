@@ -2,6 +2,7 @@ import axios, {AxiosRequestConfig, AxiosResponse, Method} from 'axios';
 import {SalonSearchResult} from "@models/response/salon-search-result";
 import {
     COUNTRIES_PATH,
+    GENERIC_EMPLOYEE_ID,
     SALON_BOOK_VISIT_PATH,
     SALON_DETAILS_PATH,
     SALON_ID_DETAILS_PATH,
@@ -35,11 +36,12 @@ export const fetchApi = async <T>(
     config?: AxiosRequestConfig
 ): Promise<ApiResponse<T>> => {
     const response: AxiosResponse<T> = await axios.request<T>({
+        ...config,
         url,
         method,
         data,
-        ...config,
     });
+    console.log('response', response)
 
     return {
         data: response.data,
@@ -82,8 +84,8 @@ export const fetchSalonReviews = async (
 export const fetchSalonTreatmentEmployees = async (
     salonId: string,
     treatmentId: string
-): Promise<ApiResponse<SalonEmployee>> => {
-    return fetchApi<SalonEmployee>(SALON_TREATMENT_EMPLOYEES_PATH(salonId, treatmentId), 'GET');
+): Promise<ApiResponse<SalonEmployee[]>> => {
+    return fetchApi<SalonEmployee[]>(SALON_TREATMENT_EMPLOYEES_PATH(salonId, treatmentId), 'GET');
 }
 
 export const fetchSalonTreatmentSlots = async (
@@ -91,7 +93,7 @@ export const fetchSalonTreatmentSlots = async (
     startDate: Date = new Date(),
     endDate: Date = new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000),
     treatments: string[],
-    employees: string[] = ['00000000-0000-0000-0000-000000000000']
+    employees: string[] = [GENERIC_EMPLOYEE_ID]
 ): Promise<ApiResponse<VisitSlot[]>> => {
     const treatmentAssignments: SimpleTreatmentAssignment[] = employees.flatMap(
         employeeId => treatments.map(treatmentId => ({
@@ -100,12 +102,20 @@ export const fetchSalonTreatmentSlots = async (
         }))
     );
 
-    return fetchApi<VisitSlot[]>(SALON_TREATMENT_SLOTS_PATH(salonId), 'POST', {
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        isNewCustomer: false,
-        treatmentAssignments,
-    } as VisitSlotsRequest);
+    const requests = await Promise.all(treatmentAssignments.map(treatmentAssignment => (
+        fetchApi<VisitSlot[]>(SALON_TREATMENT_SLOTS_PATH(salonId), 'POST', {
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            isNewCustomer: false,
+            treatmentAssignments: [treatmentAssignment],
+        } as VisitSlotsRequest)
+    )));
+
+    return {
+        data: requests.flatMap(request => request.data),
+        status: requests[0].status,
+        statusText: requests[0].statusText,
+    };
 }
 
 export const fetchCountries = async (): Promise<ApiResponse<CustomerCountry[]>> => {

@@ -1,5 +1,6 @@
-import {SalonSearchResult} from "../models/response/salon-search-result";
-import {SalonDetails, SalonSchedule} from "../models/response/salon-details";
+import {SalonSearchResult} from "@models/response/salon-search-result";
+import {SalonDetails, SalonSchedule} from "@models/response/salon-details";
+import {SalonTreatment} from "@models/response/salon-treatment";
 
 export const formatRating = (rating: number): string => {
     return '⭐️'.repeat(Math.round(rating * 2) / 2);
@@ -40,4 +41,15 @@ export const getScheduleLine = (salon: SalonSchedule[]): string => {
     });
 
     return "```\n" + schedule.join('\n') + "\n```";
+}
+
+export const formatTreatmentsLine = (treatments: SalonTreatment[], query: string | null) => {
+    return treatments.map(treatment => {
+        let highlightedName = treatment.name;
+        if (query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            highlightedName = treatment.name.replace(regex, '__$1__');
+        }
+        return `**${highlightedName}** - ${treatment.durationInMinutes} minutes${treatment.isPriceVisibleForOnlineBooking ? ` - €${formatNumber(Number.parseInt(treatment.price, 2))}` : ''}`
+    }).join('\n');
 }

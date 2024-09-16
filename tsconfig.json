@@ -105,8 +105,15 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,
+    "paths": {
+      "@models/*": ["src/models/*"],
+      "@utils/*": ["src/utils/*"],
+      "@enums/*": ["src/enums/*"],
+      "@constants/*": ["src/constants/*"],
+      "@interactions/*": ["src/interactions/*"],
+    }/* Skip type checking all .d.ts files. */
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
 }

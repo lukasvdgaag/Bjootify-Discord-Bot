@@ -1,10 +1,10 @@
 import {Command} from "../command";
 import {ActionRowBuilder, APIEmbedField, ChatInputCommandInteraction, StringSelectMenuBuilder} from "discord.js";
-import {fetchSalonsInCity} from "../../../utils/api.util";
-import {getAddressLine, getReviewLine} from "../../../utils/format.util";
-import {SalonSearchResult} from "../../../models/response/salon-search-result";
-import {SELECT_SALON_INTERACTION_ID} from "../../../constants/interactions.constant";
-import {createEmbed, createErrorEmbed} from "../../../utils/messaging.util";
+import {fetchSalonsInCity} from "@utils/api.util";
+import {getAddressLine, getReviewLine} from "@utils/format.util";
+import {SalonSearchResult} from "@models/response/salon-search-result";
+import {SELECT_SALON_INTERACTION_ID} from "@constants/interactions.constant";
+import {createEmbed, createErrorEmbed} from "@utils/messaging.util";
 
 export class SearchCommand extends Command {
 

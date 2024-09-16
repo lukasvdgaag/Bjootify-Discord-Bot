@@ -1,9 +1,9 @@
 import {ButtonInteraction} from "discord.js";
 import {Interaction} from "../interaction";
-import {SalonDetails} from "../../models/response/salon-details";
-import {Cache, getCachedOrFetchedSalon} from "../../utils/cache.util";
-import {sendListTreatmentMessage} from "../commands/hairsalon/treatment/list.treatment.command";
-import {SalonTreatmentCategory} from "../../models/response/salon-treatment";
+import {SalonDetails} from "@models/response/salon-details";
+import {Cache, getCachedOrFetchedSalon} from "@utils/cache.util";
+import {sendTreatmentCategoriesMessage} from "../commands/hairsalon/treatment/list.treatment.command";
+import {SalonTreatmentCategory} from "@models/response/salon-treatment";
 
 export class ViewSalonTreatmentGroupsInteraction extends Interaction<ButtonInteraction> {
 
@@ -24,7 +24,7 @@ export class ViewSalonTreatmentGroupsInteraction extends Interaction<ButtonInter
             return;
         }
 
-        await sendListTreatmentMessage(interaction, salon, this.treatmentsCache);
+        await sendTreatmentCategoriesMessage(interaction, salon, this.treatmentsCache);
     }
 
 }

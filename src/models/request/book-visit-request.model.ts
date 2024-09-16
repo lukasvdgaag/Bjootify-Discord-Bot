@@ -1,9 +1,9 @@
-import {CustomerCountry} from "../response/customer-country";
-import {Gender} from "../../enums/gender";
-import {SalonTreatment} from "../response/salon-treatment";
-import {SalonEmployee} from "../response/salon-employee";
-import {VisitSlot} from "../response/visit-slot";
-import {PaymentType} from "../../enums/payment-type";
+import {CustomerCountry} from "@models/response/customer-country";
+import {Gender} from "@enums/gender";
+import {SalonTreatment} from "@models/response/salon-treatment";
+import {SalonEmployee} from "@models/response/salon-employee";
+import {VisitSlot} from "@models/response/visit-slot";
+import {PaymentType} from "@enums/payment-type";
 
 export interface TreatmentAssignment {
     treatment: SalonTreatment;

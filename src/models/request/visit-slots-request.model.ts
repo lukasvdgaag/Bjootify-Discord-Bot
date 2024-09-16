@@ -1,4 +1,4 @@
-import {SimpleTreatmentAssignment} from "../response/visit-slot";
+import {SimpleTreatmentAssignment} from "@models/response/visit-slot";
 
 export interface VisitSlotsRequest {
     startDate: string; // iso

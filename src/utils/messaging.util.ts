@@ -9,10 +9,10 @@ import {
     EmbedFooterOptions,
     MessageComponentInteraction
 } from "discord.js";
-import {ERROR_COLOR, THEME_COLOR} from "../constants/colors.constant";
-import {SalonDetails} from "../models/response/salon-details";
-import {getAddressLine, getReviewLine, getScheduleLine} from "./format.util";
-import {SELECT_SALON_TREATMENT_GROUPS} from "../constants/interactions.constant";
+import {ERROR_COLOR, THEME_COLOR} from "@constants/colors.constant";
+import {SalonDetails} from "@models/response/salon-details";
+import {getAddressLine, getReviewLine, getScheduleLine} from "@utils/format.util";
+import {SELECT_SALON_TREATMENT_GROUPS} from "@constants/interactions.constant";
 
 export const createEmbed = ({title, description = null, color = THEME_COLOR, fields = [], imageUrl = null, thumbnailUrl = null, footer = null}: {
     title: string,

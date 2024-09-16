@@ -1,9 +1,9 @@
 import {Command} from "../command";
 import {ChatInputCommandInteraction} from "discord.js";
-import {Cache, getUserSelectedSalon} from "../../../utils/cache.util";
-import {SalonDetails} from "../../../models/response/salon-details";
-import {UserSelection} from "../../../models/user-selection";
-import {sendSalonDetailsEmbed} from "../../../utils/messaging.util";
+import {Cache, getUserSelectedSalon} from "@utils/cache.util";
+import {SalonDetails} from "@models/response/salon-details";
+import {UserSelection} from "@models/user-selection";
+import {sendSalonDetailsEmbed} from "@utils/messaging.util";
 
 export class DetailsCommand extends Command {
 

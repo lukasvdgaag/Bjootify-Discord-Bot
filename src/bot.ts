@@ -1,18 +1,18 @@
 import {ChatInputCommandInteraction, Client, GatewayIntentBits, MessageComponentInteraction} from 'discord.js';
 import * as dotenv from 'dotenv';
-import {Cache} from "./utils/cache.util";
-import {UserSelection} from "./models/user-selection";
-import {SalonDetails} from "./models/response/salon-details";
-import {Command} from "./interactions/commands/command";
-import {SearchCommand} from "./interactions/commands/hairsalon/search.command";
-import {applicationCommands} from "./constants/commands.constant";
-import {Interaction} from "./interactions/interaction";
-import {SelectSalonInteraction} from "./interactions/buttons/select-salon.interaction";
-import {SELECT_SALON_INTERACTION_ID, SELECT_SALON_TREATMENT_GROUPS} from "./constants/interactions.constant";
-import {DetailsCommand} from "./interactions/commands/hairsalon/details.command";
-import {SalonTreatmentCategory} from "./models/response/salon-treatment";
-import {ListTreatmentCommand} from "./interactions/commands/hairsalon/treatment/list.treatment.command";
-import {ViewSalonTreatmentGroupsInteraction} from "./interactions/buttons/view-salon-treatment-groups.interaction";
+import {Cache} from "@utils/cache.util";
+import {UserSelection} from "@models/user-selection";
+import {SalonDetails} from "@models/response/salon-details";
+import {Command} from "@interactions/commands/command";
+import {SearchCommand} from "@interactions/commands/hairsalon/search.command";
+import {applicationCommands} from "@constants/commands.constant";
+import {Interaction} from "@interactions/interaction";
+import {SelectSalonInteraction} from "@interactions/buttons/select-salon.interaction";
+import {SELECT_SALON_INTERACTION_ID, SELECT_SALON_TREATMENT_GROUPS} from "@constants/interactions.constant";
+import {DetailsCommand} from "@interactions/commands/hairsalon/details.command";
+import {SalonTreatmentCategory} from "@models/response/salon-treatment";
+import {ListTreatmentCommand} from "@interactions/commands/hairsalon/treatment/list.treatment.command";
+import {ViewSalonTreatmentGroupsInteraction} from "@interactions/buttons/view-salon-treatment-groups.interaction";
 
 dotenv.config();
 
@@ -35,6 +35,7 @@ client.on('ready', () => {
     ]);
     regularInteractions.set(SELECT_SALON_INTERACTION_ID, new SelectSalonInteraction(salonsCache, userSelectionsCache));
     regularInteractions.set(SELECT_SALON_TREATMENT_GROUPS, new ViewSalonTreatmentGroupsInteraction(salonsCache, treatmentsCache));
+    // TODO: SELECT_SALON_TREATMENT
 
     console.log('Bjootify Bot is online!');
 });

@@ -1,10 +1,10 @@
 import {Interaction} from "../interaction";
 import {StringSelectMenuInteraction} from "discord.js";
-import {Cache} from "../../utils/cache.util";
-import {UserSelection} from "../../models/user-selection";
-import {SalonDetails} from "../../models/response/salon-details";
-import {fetchSalonDetailsByCityAndSlug} from "../../utils/api.util";
-import {createErrorEmbed, sendSalonDetailsEmbed} from "../../utils/messaging.util";
+import {Cache} from "@utils/cache.util";
+import {UserSelection} from "@models/user-selection";
+import {SalonDetails} from "@models/response/salon-details";
+import {fetchSalonDetailsByCityAndSlug} from "@utils/api.util";
+import {createErrorEmbed, sendSalonDetailsEmbed} from "@utils/messaging.util";
 
 export class SelectSalonInteraction extends Interaction<StringSelectMenuInteraction> {
 

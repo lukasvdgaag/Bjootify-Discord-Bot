@@ -1,9 +1,9 @@
-import {UserSelection} from "../models/user-selection";
-import {SalonDetails} from "../models/response/salon-details";
-import {fetchSalonDetailsById, fetchSalonTreatments} from "./api.util";
-import {createErrorEmbed} from "./messaging.util";
+import {UserSelection} from "@models/user-selection";
+import {SalonDetails} from "@models/response/salon-details";
+import {fetchSalonDetailsById, fetchSalonTreatments} from "@utils/api.util";
+import {createErrorEmbed} from "@utils/messaging.util";
 import {CommandInteraction, MessageComponentInteraction} from "discord.js";
-import {SalonTreatmentCategory} from "../models/response/salon-treatment";
+import {SalonTreatmentCategory} from "@models/response/salon-treatment";
 
 export class Cache<T> {
     private cache: Map<string, T>;

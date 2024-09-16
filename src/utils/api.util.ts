@@ -1,5 +1,5 @@
 import axios, {AxiosRequestConfig, AxiosResponse, Method} from 'axios';
-import {SalonSearchResult} from "../models/response/salon-search-result";
+import {SalonSearchResult} from "@models/response/salon-search-result";
 import {
     COUNTRIES_PATH,
     SALON_BOOK_VISIT_PATH,
@@ -10,17 +10,17 @@ import {
     SALON_TREATMENT_EMPLOYEES_PATH,
     SALON_TREATMENT_SLOTS_PATH,
     SALON_TREATMENTS_PATH
-} from "../constants/api.constant";
-import {SalonDetails} from "../models/response/salon-details";
-import {SalonTreatmentCategory} from "../models/response/salon-treatment";
-import {SalonReview} from "../models/response/salon-review";
-import {SalonEmployee} from "../models/response/salon-employee";
-import {SimpleTreatmentAssignment, VisitSlot} from "../models/response/visit-slot";
-import {VisitSlotsRequest} from "../models/request/visit-slots-request.model";
-import {CustomerCountry} from "../models/response/customer-country";
-import {Gender} from "../enums/gender";
-import {BookVisitRequest, TreatmentAssignment} from "../models/request/book-visit-request.model";
-import {PaymentType} from "../enums/payment-type";
+} from "@constants/api.constant";
+import {SalonDetails} from "@models/response/salon-details";
+import {SalonTreatmentCategory} from "@models/response/salon-treatment";
+import {SalonReview} from "@models/response/salon-review";
+import {SalonEmployee} from "@models/response/salon-employee";
+import {SimpleTreatmentAssignment, VisitSlot} from "@models/response/visit-slot";
+import {VisitSlotsRequest} from "@models/request/visit-slots-request.model";
+import {CustomerCountry} from "@models/response/customer-country";
+import {BookVisitRequest, TreatmentAssignment} from "@models/request/book-visit-request.model";
+import {Gender} from "@enums/gender";
+import {PaymentType} from "@enums/payment-type";
 
 export type ApiResponse<T> = {
     data: T;
